@@ -1,0 +1,22 @@
+.sidebar {
+    width: 230px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1abc9c, #16a085);
+    color: white;
+}
+
+.sidebar a {
+    padding: 12px;
+    display: block;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.sidebar a:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.content {
+    background: #f4f6f9;
+    border-radius: 10px;
+}
