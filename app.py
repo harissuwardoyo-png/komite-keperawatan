@@ -446,10 +446,3 @@ def export_pdf_tabel():
 # ================= RUN =================
 if __name__ == "__main__":
     app.run()
-class Config:
-    SECRET_KEY = "supersecretkey"
-    UPLOAD_FOLDER = "static/uploads"
-Flask
-gunicorn
-reportlab
-web: gunicorn app:app
