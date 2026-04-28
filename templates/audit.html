@@ -1,0 +1,138 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h3 class="mb-3">Audit</h3>
+
+<!-- ================= BUTTON EXPORT ================= -->
+<div class="mb-3">
+    <a href="/audit/pdf" target="_blank" class="btn btn-primary">
+        📄 Export PDF (Standar)
+    </a>
+
+    <a href="/audit/pdf2" target="_blank" class="btn btn-success">
+        🖼 Export PDF (Foto Before-After)
+    </a>
+</div>
+
+<!-- ================= FORM INPUT ================= -->
+<form method="POST" enctype="multipart/form-data" class="card p-3 shadow-sm mb-3">
+
+    <!-- TANGGAL -->
+    <input type="date" name="tanggal" class="form-control mb-2" required>
+
+    <!-- UNIT -->
+    <select name="unit" class="form-control mb-2" required>
+        <option value="">-- Pilih Unit --</option>
+        <option>IGD</option>
+        <option>Poliklinik 1</option>
+        <option>Poliklinik 2</option>
+        <option>Poliklinik 3</option>
+        <option>ICU</option>
+        <option>OT</option>
+        <option>HD</option>
+        <option>NICU</option>
+        <option>PICU</option>
+        <option>Perina</option>
+        <option>RI Anggrek</option>
+        <option>RI Amarilis</option>
+        <option>RI Rose</option>
+        <option>RI Jasmine</option>
+        <option>RI Lavender</option>
+        <option>RI Safron</option>
+        <option>RI Lily</option>
+    </select>
+
+    <!-- FOTO -->
+    <label><b>Foto Before</b></label>
+    <input type="file" name="foto_before" class="form-control mb-2">
+
+    <label><b>Foto After</b></label>
+    <input type="file" name="foto_after" class="form-control mb-2">
+
+    <!-- TEMUAN -->
+    <input name="temuan" class="form-control mb-2" placeholder="Temuan" required>
+
+    <!-- REKOMENDASI -->
+    <input name="rekomendasi" class="form-control mb-2" placeholder="Rekomendasi" required>
+
+    <!-- STATUS -->
+    <select name="status" class="form-control mb-2">
+        <option>Dikonfirmasi</option>
+        <option>Proses Perbaikan</option>
+        <option>Selesai</option>
+    </select>
+
+    <button class="btn btn-primary">Simpan</button>
+</form>
+
+<!-- ================= TABEL ================= -->
+<div class="card shadow-sm">
+<table class="table table-bordered table-striped mb-0 align-middle">
+
+<thead class="table-primary text-center">
+<tr>
+    <th>Before</th>
+    <th>After</th>
+    <th>Tanggal</th>
+    <th>Unit</th>
+    <th>Temuan</th>
+    <th>Rekomendasi</th>
+    <th>Status</th>
+    <th>Aksi</th>
+</tr>
+</thead>
+
+<tbody>
+{% for d in data %}
+<tr>
+
+    <!-- FOTO BEFORE -->
+    <td class="text-center">
+        {% if d.foto %}
+            <img src="/static/uploads/{{ d.foto }}?t={{ d.id }}" width="80" class="rounded shadow-sm">
+        {% else %}
+            <span class="text-muted">-</span>
+        {% endif %}
+    </td>
+
+    <!-- FOTO AFTER -->
+    <td class="text-center">
+        {% if d.foto_after %}
+            <img src="/static/uploads/{{ d.foto_after }}?t={{ d.id }}" width="80" class="rounded shadow-sm">
+        {% else %}
+            <span class="text-muted">-</span>
+        {% endif %}
+    </td>
+
+    <!-- DATA -->
+    <td>{{ d.tanggal }}</td>
+    <td>{{ d.unit }}</td>
+    <td style="max-width:200px; white-space:normal;">{{ d.temuan }}</td>
+    <td style="max-width:200px; white-space:normal;">{{ d.rekomendasi }}</td>
+
+    <!-- STATUS -->
+    <td class="text-center">
+        {% if d.status == 'Selesai' %}
+            <span class="badge bg-success">{{ d.status }}</span>
+        {% elif d.status == 'Proses Perbaikan' %}
+            <span class="badge bg-warning text-dark">{{ d.status }}</span>
+        {% else %}
+            <span class="badge bg-danger">{{ d.status }}</span>
+        {% endif %}
+    </td>
+
+    <!-- AKSI -->
+    <td class="text-center">
+        <a href="/audit/edit/{{ d.id }}" class="btn btn-warning btn-sm">Edit</a>
+        <a href="/audit/delete/{{ d.id }}" class="btn btn-danger btn-sm"
+           onclick="return confirm('Yakin hapus?')">Delete</a>
+    </td>
+
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+</div>
+
+{% endblock %}

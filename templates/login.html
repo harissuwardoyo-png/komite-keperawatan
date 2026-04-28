@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+
+        .btn-login:hover {
+          background: #0b5ed7;
+           transform: scale(1.03);
+           transition: 0.2s;
+        }
+
+            /* 🔥 BACKGROUND FOTO */
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+                        url("/static/bg-rs.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 🔥 CARD LOGIN */
+        .login-card {
+            width: 350px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95);
+            animation: fadeIn 1s ease;
+        }
+
+        /* 🔥 ANIMASI */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 🔥 TITLE */
+        .title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0d6efd;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .btn-login {
+            border-radius: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card p-4 shadow login-card">
+
+    <!-- 🔥 LOGO -->
+    <img src="/static/logo.png" width="80" class="d-block mx-auto mb-2">
+
+    <!-- 🔥 HEADER -->
+    <div class="title mb-3">
+        SELAMAT DATANG DI <br>
+        SISTEM KOMITE KEPERAWATAN <br>
+        RS MURNI TEGUH CILEDUG
+    </div>
+
+    <hr>
+
+    <!-- 🔥 FORM -->
+    <form method="POST">
+        <input name="username" class="form-control mb-2" placeholder="Username">
+        <input name="password" type="password" class="form-control mb-3" placeholder="Password">
+
+        <button class="btn btn-primary w-100 btn-login">Login</button>
+    </form>
+
+</div>
+
+</body>
+</html>

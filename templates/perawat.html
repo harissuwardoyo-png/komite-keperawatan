@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h3 class="mb-3">Data Perawat</h3>
+
+<form method="POST" class="row g-2 mb-4">
+
+    <div class="col-md-3">
+        <input name="nama" class="form-control" placeholder="Nama" required>
+    </div>
+
+    <div class="col-md-2">
+        <input type="date" name="tgl_lahir" class="form-control">
+    </div>
+
+    <div class="col-md-2">
+        <select name="profesi" class="form-control" required>
+            <option value="">-- Profesi --</option>
+            <option>Perawat</option>
+            <option>Bidan</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <select name="jenjang" class="form-control">
+            <option>PK 1</option>
+            <option>PK 2</option>
+            <option>PK 3</option>
+            <option>PK 4</option>
+            <option>BK 1</option>
+            <option>BK 2</option>
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <input name="kampus" class="form-control" placeholder="Kampus">
+    </div>
+
+    <div class="col-md-2">
+        <select name="pendidikan" class="form-control">
+            <option>D3</option>
+            <option>S1</option>
+            <option>S2</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <input name="no_str" class="form-control" placeholder="No STR">
+    </div>
+
+    <div class="col-md-2">
+        <input name="masa_str" type="date" class="form-control">
+    </div>
+
+    <div class="col-md-2">
+        <input name="no_sip" class="form-control" placeholder="No SIP">
+    </div>
+
+    <div class="col-md-2">
+        <input name="masa_sip" type="date" class="form-control">
+    </div>
+
+    <div class="col-md-2">
+        <input name="no_spk" class="form-control" placeholder="No SPK">
+    </div>
+
+    <div class="col-md-2">
+        <input name="masa_spk" type="date" class="form-control">
+    </div>
+
+    <div class="col-md-2">
+        <button class="btn btn-success w-100">Simpan</button>
+    </div>
+
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Nama</th>
+            <th>Tgl Lahir</th>
+            <th>Jenjang</th>
+            <th>Profesi</th>
+            <th>STR</th>
+            <th>SIP</th>
+            <th>SPK</th>
+            <th width="150">Aksi</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for p in data %}
+        <tr>
+            <td>{{ p.nama }}</td>
+            <td>{{ p.tgl_lahir }}</td>
+            <td>{{ p.jenjang }}</td>
+            <td>{{ p.profesi }}</td>
+            <td>{{ p.no_str }}</td>
+            <td>{{ p.no_sip }}</td>
+            <td>{{ p.no_spk }}</td>
+
+            <td>
+                <a href="/perawat/edit/{{ p.id }}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/perawat/delete/{{ p.id }}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Yakin hapus data?')">
+                   Delete
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

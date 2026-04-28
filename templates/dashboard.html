@@ -1,0 +1,183 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <h3 class="mb-3">Dashboard Komite Keperawatan</h3>
+
+    <!-- ================= CARD ================= -->
+    <div class="row mb-3">
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm p-2">
+                <small>Total Audit</small>
+                <h4 class="text-primary">{{ audit|sum(attribute='jumlah') }}</h4>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm p-2">
+                <small>Selesai</small>
+                <h4 class="text-success">
+                    {{ audit|selectattr('status','equalto','Selesai')|map(attribute='jumlah')|sum }}
+                </h4>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm p-2">
+                <small>Proses</small>
+                <h4 class="text-warning">
+                    {{ audit|selectattr('status','equalto','Proses Perbaikan')|map(attribute='jumlah')|sum }}
+                </h4>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm p-2">
+                <small>Belum</small>
+                <h4 class="text-danger">
+                    {{ audit|selectattr('status','equalto','Dikonfirmasi')|map(attribute='jumlah')|sum }}
+                </h4>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= NOTIF ================= -->
+    {% if notif %}
+    <div class="alert alert-danger p-2 mb-3">
+        <ul class="mb-0">
+            {% for n in notif %}
+            <li>{{ n }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <div class="alert alert-success p-2 mb-3">
+        Tidak ada data expired
+    </div>
+    {% endif %}
+
+    <!-- ================= GRAFIK ================= -->
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card p-2 shadow-sm">
+                <small class="text-center">Status Audit</small>
+                <canvas id="chart" class="chart-small"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-2 shadow-sm">
+                <small class="text-center">Profesi</small>
+                <canvas id="chartProfesi" class="chart-small"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-2 shadow-sm">
+                <small class="text-center">Jenjang</small>
+                <canvas id="chartJenjang" class="chart-small"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= STYLE ================= -->
+<style>
+.chart-small {
+    max-height: 250px;
+}
+</style>
+
+<!-- ================= CHART ================= -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+<script>
+
+/* ================= BAR AUDIT ================= */
+new Chart(document.getElementById('chart'), {
+    type: 'bar',
+    data: {
+        labels: [{% for a in audit %}"{{a.status}}",{% endfor %}],
+        datasets: [{
+            data: [{% for a in audit %}{{a.jumlah}},{% endfor %}],
+            backgroundColor: ['#0d6efd','#ffc107','#dc3545']
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { display: false },
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                formatter: value => value
+            }
+        }
+    },
+    plugins: [ChartDataLabels]
+});
+
+
+/* ================= PIE PROFESI ================= */
+new Chart(document.getElementById('chartProfesi'), {
+    type: 'pie',
+    data: {
+        labels: [{% for p in profesi %}"{{p.profesi}}",{% endfor %}],
+        datasets: [{
+            data: [{% for p in profesi %}{{p.jumlah}},{% endfor %}],
+            backgroundColor: ['#0d6efd','#20c997']
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { position: 'bottom' },
+            datalabels: {
+                color: '#fff',
+                formatter: function(value, context) {
+                    let total = context.chart.data.datasets[0].data
+                        .reduce((a, b) => a + b, 0);
+                    let percent = ((value / total) * 100).toFixed(1);
+                    return value + "\n(" + percent + "%)";
+                }
+            }
+        }
+    },
+    plugins: [ChartDataLabels]
+});
+
+
+/* ================= PIE JENJANG ================= */
+new Chart(document.getElementById('chartJenjang'), {
+    type: 'pie',
+    data: {
+        labels: [{% for j in jenjang %}"{{j.jenjang}}",{% endfor %}],
+        datasets: [{
+            data: [{% for j in jenjang %}{{j.jumlah}},{% endfor %}]
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { position: 'bottom' },
+            datalabels: {
+                color: '#fff',
+                formatter: function(value, context) {
+                    let total = context.chart.data.datasets[0].data
+                        .reduce((a, b) => a + b, 0);
+                    let percent = ((value / total) * 100).toFixed(1);
+                    return value + "\n(" + percent + "%)";
+                }
+            }
+        }
+    },
+    plugins: [ChartDataLabels]
+});
+
+</script>
+
+{% endblock %}

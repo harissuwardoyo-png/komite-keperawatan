@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h3>Edit Audit</h3>
+
+<form method="POST">
+
+    <input type="date" name="tanggal" value="{{ data.tanggal }}" class="form-control mb-2">
+
+    <select name="unit" class="form-control mb-2">
+        <option {{ 'selected' if data.unit=='IGD' else '' }}>IGD</option>
+        <option {{ 'selected' if data.unit=='ICU' else '' }}>ICU</option>
+        <option {{ 'selected' if data.unit=='NICU' else '' }}>NICU</option>
+        <option {{ 'selected' if data.unit=='PICU' else '' }}>PICU</option>
+        <option {{ 'selected' if data.unit=='Poliklinik 1' else '' }}>Poliklinik 1</option>
+        <option {{ 'selected' if data.unit=='Poliklinik 2' else '' }}>Poliklinik 2</option>                   <option {{ 'selected' if data.unit=='Poliklinik 3' else '' }}>Poliklinik 3</option>
+        <option {{ 'selected' if data.unit=='OT' else '' }}>OT</option>
+        <option {{ 'selected' if data.unit=='HD' else '' }}>HD</option>
+        <option {{ 'selected' if data.unit=='Perina' else '' }}>Perina</option>
+        <option {{ 'selected' if data.unit=='RI Anggrek' else '' }}>RI Anggrek</option>
+        <option {{ 'selected' if data.unit=='RI Amarilis' else '' }}>RI Amarilis</option>
+        <option {{ 'selected' if data.unit=='RI Rose' else '' }}>RI Rose</option>
+        <option {{ 'selected' if data.unit=='RI Jasmine' else '' }}>RI Jasmine</option>
+        <option {{ 'selected' if data.unit=='RI Lavender' else '' }}>RI Lavender</option>
+        <option {{ 'selected' if data.unit=='RI Safron' else '' }}>RI Safron</option>
+        <option {{ 'selected' if data.unit=='RI Lily' else '' }}>RI Lily</option>
+    </select>
+
+    <!-- FOTO LAMA -->
+    {% if data.foto %}
+        <p>Foto Saat Ini:</p>
+        <img src="/static/uploads/{{ data.foto }}" width="120" class="mb-2">
+    {% endif %}
+
+    <!-- UPLOAD FOTO BARU -->
+    <input type="file" name="foto" class="form-control mb-2">
+
+    <!-- TEMUAN -->
+    <input name="temuan" value="{{ data.temuan }}" class="form-control mb-2">
+
+    <!-- REKOMENDASI -->
+    <input name="rekomendasi" value="{{ data.rekomendasi }}" class="form-control mb-2">
+
+    <!-- STATUS -->
+    <select name="status" class="form-control mb-2">
+        <option {{ 'selected' if data.status=='Dikonfirmasi' else '' }}>Dikonfirmasi</option>
+        <option {{ 'selected' if data.status=='Proses Perbaikan' else '' }}>Proses Perbaikan</option>
+        <option {{ 'selected' if data.status=='Selesai' else '' }}>Selesai</option>
+    </select>
+
+    <button class="btn btn-success">Update</button>
+    <a href="/audit" class="btn btn-secondary">Kembali</a>
+
+</form>
+
+{% endblock %}

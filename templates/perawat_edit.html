@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h3>Edit Data Perawat</h3>
+
+<form method="POST">
+    <input name="nama" value="{{data.nama}}" class="form-control mb-2">
+    <input type="date" name="tgl_lahir" value="{{data.tgl_lahir}}" class="form-control mb-2">
+    
+    <input name="jenjang" value="{{data.jenjang}}" class="form-control mb-2">
+    <input name="kampus" value="{{data.kampus}}" class="form-control mb-2">
+    <input name="pendidikan" value="{{data.pendidikan}}" class="form-control mb-2">
+
+    <input name="no_str" value="{{data.no_str}}" class="form-control mb-2">
+    <input type="date" name="masa_str" value="{{data.masa_str}}" class="form-control mb-2">
+
+    <input name="no_sip" value="{{data.no_sip}}" class="form-control mb-2">
+    <input type="date" name="masa_sip" value="{{data.masa_sip}}" class="form-control mb-2">
+
+    <input name="no_spk" value="{{data.no_spk}}" class="form-control mb-2">
+    <input type="date" name="masa_spk" value="{{data.masa_spk}}" class="form-control mb-2">
+
+    <select name="profesi" class="form-control mb-2">
+        <option {% if data.profesi=='Perawat' %}selected{% endif %}>Perawat</option>
+        <option {% if data.profesi=='Bidan' %}selected{% endif %}>Bidan</option>
+    </select>
+
+    <button class="btn btn-primary">Update</button>
+</form>
+
+{% endblock %}
