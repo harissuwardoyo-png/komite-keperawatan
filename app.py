@@ -452,3 +452,4 @@ class Config:
 Flask
 gunicorn
 reportlab
+web: gunicorn app:app
